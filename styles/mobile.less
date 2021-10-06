@@ -1,0 +1,279 @@
+@og-mobile-padding: 30px;
+
+@media screen and (max-width: 480px) {
+  og-smi {
+    .og-container {
+      width: 100%;
+      padding: 0 10px;
+
+      .og-shipment-header {
+        padding: @og-mobile-padding;
+      }
+
+      .og-product {
+        padding: 30px 20px;
+
+        .og-product-image-container {
+          width: 80px;
+          height: 80px;
+          min-width: 80px;
+          margin-right: 15px;
+        }
+
+        .og-name-price-container {
+          align-content: center;
+        }
+
+        .og-product-name {
+          font-size: 16px;
+        }
+
+        .og-name-price-controls-container {
+          max-width: ~"calc(100% - 80px)";
+
+          .og-product-description {
+            overflow-wrap: anywhere;
+          }
+
+          .og-pause-subscription-button {
+            margin-top: 20px;
+            display: block;
+          }
+        }
+
+        .og-product-description {
+          margin: 0;
+          align-self: flex-start;
+        }
+
+        .og-description-and-controls {
+          display: flex;
+          align-items: center;
+        }
+
+        .og-subscription-quantity {
+          margin-top: 0;
+          font-size: 14px;
+        }
+      }
+
+      .og-shipment-header {
+        position: relative;
+      }
+
+      .og-mobile-menu {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 30px;
+        width: 30px;
+        align-items: center;
+
+        &:hover,
+        &:focus {
+          transform: translateY(-1px);
+
+          & > span {
+            background: #666;
+          }
+        }
+
+        & > span {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #000;
+          transition: all 0.2s ease;
+          pointer-events: none;
+        }
+      }
+
+      .og-mobile-menu-options {
+        position: absolute;
+        z-index: 1;
+        top: 80%;
+        right: 5%;
+        width: 140px;
+        border: 1px solid #979797;
+        background: #fff;
+        border-radius: 5px;
+
+        .og-skip-shipment-button > button,
+        .og-send-shipment-now-button > button {
+          border: none;
+          width: 100%;
+          text-align: left;
+          padding: 10px 20px;
+
+          &:hover {
+            box-shadow: none;
+            transform: none;
+            background: #f6f6f6;
+          }
+        }
+      }
+
+      details {
+        padding: 40px 20px;
+        position: relative;
+
+        &[open] {
+          padding-bottom: 90px;
+        }
+
+        summary {
+          list-style: none;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          display: block;
+          height: 90px;
+          text-align: center;
+          width: 100%;
+          font-size: 18px;
+          border-top: @border-width @border-style @border-color;
+          outline: 0;
+
+          &::marker, &::-webkit-details-marker {
+            display: none;
+          }
+
+          > div {
+            display: inline-block;
+            line-height: 90px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          &:after {
+            content: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="36" height="100%" viewBox="0 0 36 36"> <path d="M10.5 15l7.5 7.5 7.5-7.5z" /> <path d="M0 0h36v36h-36z" fill="none" /> </svg>');
+            transform: rotate(180deg);
+            display: inline-block;
+            vertical-align: baseline;
+            position: relative;
+            top: 6px;
+          }
+        }
+
+        &[open] summary:after {
+          transform: rotate(0deg);
+          top: 12px;
+        }
+      }
+
+      .og-mobile .og-payment-shipping {
+        padding: 40px 20px;
+        font-size: 14px;
+
+      }
+
+      .og-total-table {
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+        border-top: 1px solid #979797;
+        padding: 40px 0 20px;
+      }
+
+      .og-shipment-info {
+        .og-change-shipment-date-button > button.og-button {
+          text-decoration: underline;
+          border: none;
+          outline: none;
+          min-width: 0;
+          padding: 0;
+          font-size: 14px;
+          margin-top: 5px;
+
+          &:hover {
+            box-shadow: none;
+            transform: none;
+          }
+        }
+      }
+
+      og-item-controls {
+        min-width: 0;
+        margin-bottom: 0;
+        width: 100%;
+      }
+
+      .og-mobile {
+        display: block;
+      }
+
+      .og-desktop {
+        display: none !important;
+      }
+
+      .og-shipment-body {
+        .og-product {
+          .og-description-and-controls,
+          .og-name-price-controls-container {
+            flex-direction: column;
+
+            .og-product-name {
+              margin-bottom: 0;
+            }
+
+            .og-price {
+              margin: 10px 0;
+              font-size: 14px;
+            }
+
+            .og-freq-quantity-controls {
+              font-size: 14px;
+
+              og-subscription-quantity {
+                input[type='number'] {
+                  width: 50px;
+                  font-size: 14px;
+                }
+              }
+
+              og-subscription-frequency {
+                select {
+                  width: 110px;
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+
+          .og-description-and-controls {
+            width: 100%;
+          }
+        }
+      }
+
+      .og-shipment-footer {
+        .og-mobile-payment-shipping {
+
+          h3 {
+            font-size: 18px;
+            border-top: 1px solid #979797;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+          }
+
+        }
+      }
+    }
+
+    dialog {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: auto;
+      overflow-y: scroll;
+      height: 100vh;
+    }
+
+  }
+}

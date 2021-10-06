@@ -1,0 +1,41 @@
+{# This template serves as the entrypoint of the SMI #}
+
+<div class="og-container">
+  {% if loading %}
+    <div class="og-content-skeleton" /></div>
+  {% elseif global_error %}
+    <div class="og-page-error">{{ 'page_error' | t }}</div>
+  {% elseif orders.length or (subscriptions | reject('live')).length %}
+    {# The markup within this if block is shown if the customer is logged in and has an order or subscription #}
+    <section id="og-smi-main-header" aria-labelledby="og-smi-main-title">
+      <h1 class="og-title" id="og-smi-main-title">{{ 'msi_main_title'  | t }}</h1>
+    </section>
+
+    {% if (orders | select(status='SEND_NOW')).length %}
+      {% include 'orders-processing' %}
+    {% endif %}
+
+    {% if (orders | select(status='UNSENT')).length %}
+      {% include 'orders-unsent' %}
+    {% endif %}
+
+    {% if (subscriptions | reject('live')).length %}
+      {% include 'inactive-subscriptions' %}
+    {% endif %}
+
+  {% else %}
+    {# The markup within this else block is shown if the customer is either not logged in or has neither an order nor a subscription#}
+    <section class="og-message-main" id="og-no-shipment-message">
+      {{ 'not_a_subscriber' | t }}
+    </section>
+  {% endif %}
+</div>{# /og-container #}
+
+<ul class="og-toasts">
+  {% for notification in notifications %}
+    {% set toasts_t = 'toasts' | t %}
+    <li class="og-toast {{ 'og-toast-error' if 'error' in notification else 'og-toast-success'}}">
+      {{ toasts_t[notification.message] if toasts_t[notification.message] else notification.message }}
+    </li>
+  {% endfor %}
+</ul>

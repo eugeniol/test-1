@@ -1,0 +1,38 @@
+<div class="og-reactivate-subscription-button">
+
+  <button
+    class="og-button"
+    type="button"
+    @click={{ 'show_closest_modal' | js }}
+  >
+    {{ 'subscription_reactivate_button' | t }}
+  </button>
+
+  <dialog aria-hidden="true">
+    <form 
+      action="{{ 'reactivate_subscription' | action }}"  
+      name="og_subscription_reactivate"
+      @success={{ 'close_closest_modal' | js }}
+      @reset={{ 'close_closest_modal' | js }}
+    >
+      <div class="og-dialog-header">
+        <h5 class="og-dialog-title">{{ 'modal_subscription_reactivate_header' | t }}</h5>
+        <button type="reset" aria-label="{{ 'modal_close' | t }}" class="og-button og-button-close">{{ 'modal_close' | t }}</button>
+      </div>{# /og-dialog-header #}
+
+      <div class="og-dialog-body">
+        {{ 'modal_subscription_reactivate_body' | t }}
+      </div>{# /og-dialog-body #}
+
+      <div class="og-dialog-footer">
+        <input type="hidden" name="subscription" value="{{ subscription.public_id }}"/>
+        <input type="hidden" name="every" value="{{ subscription.every }}"/>
+        <input type="hidden" name="every_period" value="{{ subscription.every_period }}"/>
+        <button name="reactivate_subscription" type="submit" class="og-button">
+          {{ 'modal_reactivate_save' | t }}
+        </button>
+      </div>{# /og-dialog-footer #}
+
+    </form>
+  </dialog>
+</div>{# /og-reactivate-subscription-button #}

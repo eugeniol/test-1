@@ -1,0 +1,86 @@
+{# Upcoming orders entry point #}
+<section id="og-sent-shipments" aria-labelledby="shipments-sent-header">
+  {# Iterate over all orders #}
+  {% for order in orders | select(status='SEND_NOW') %}
+
+    {# The markup within this if block is displayed for all sent orders #}
+    {# If at least one sent order exists, display a sent shipment header #}
+    {% if index == 0 %}
+      <h1 class="og-title" id="shipments-sent-header">{{ 'shipment_sent_processing' | t }}</h1>
+      <div class="og-sent-shipment-info"></div>
+    {% endif %}
+
+    {% set current_order_items = order_items | select(order=order.public_id) %}
+    {% set payment = payments | find(id=order.payment) %}
+    {% set shipping_address = addresses | find(id=order.shipping_address) %}
+
+    <div class="og-sent-shipment">
+      {# Shipment body #}
+      <div class="og-shipment-body">
+        {# Iterate over all order items in the order #}
+        {% for order_item in current_order_items %}
+          {% set product = products | find(id=order_item.product) %}
+          {% set subscription = subscriptions | find(id=order_item.subscription) %}
+          {# Order item #}
+          <div class="og-product" og-item-id="{{ order_item.public_id }}" og-subscription-id="{{ order_item.subscription }}">
+            {% if product %}
+              <div class="og-product-image-container">
+                <img class="og-product-image" loading="lazy" alt="{{ product.name }}" src="{{ product.image_url | if_defined }}" width="200" height="200"/>
+              </div>
+              <div class="og-name-price-controls-container">
+                <div class="og-description-and-controls">
+                  <div class="og-product-description">
+                    <h3 class="og-product-name">
+                      <a href="{{ product.detail_url | if_defined }}">{{ product.name }}</a>
+                    </h3>
+                    <h5 class="og-product-display-name">{{ product.display_name }}</h5>
+                  </div>{# /og-product-description #}
+                  <div class="og-price">
+                    {# The markup within this if block is displayed if the final #}
+                    {# price represents a discount from the original price #}
+                    {% if order_item.show_original_price %}
+                      <span class="og-base-unit-price">{{ order_item.price | currency }}</span>
+                    {% endif %}
+                    <span class="og-final-unit-price">{{ (order_item.total_price / order_item.quantity) | currency }}</span>
+                    <span>{{ 'product_price_each' | t }}</span>
+                  </div>{# /og-price #}
+                </div>{# /og-description-and-controls #}
+
+                {# Quantity control #}
+                <div class="og-freq-quantity-controls">
+                  <div class="og-quantity og-wrapper">
+                    {{ 'item_controls_sending' | t }}
+                    <span>{{ order_item.quantity }}</span>
+                  </div>
+                </div>{# /og-freq-quantity-controls #}
+
+              </div>{# /og-name-price-controls-container #}
+            {% endif %}
+          </div>{# /og-product #}
+        {% endfor %}
+      </div>{# /og-shipment-body #}
+
+      {# Shipment footer #}
+      <div class="og-shipment-footer">
+        <details class="og-mobile og-mobile-payment-shipping">
+
+          <div class="og-payment-shipping">
+            {% include 'billing-shipping-details' %}
+          </div>
+          <div class="og-total-table-mobile">
+            {% include 'order-total' %}
+          </div>
+          <summary>
+            {{ 'billing_total_header' | t }} - {{ order.total | currency }}
+          </summary>
+        </details>{# /og-mobile-payment-shipping #}
+        <div class="og-payment-shipping og-desktop">
+
+          {% include 'billing-shipping-details' %}
+          {% include 'order-total' %}
+
+        </div>{# /og-payment-shipping #}
+      </div>{# /og-shipment-footer #}
+    </div>{# /og-sent-shipment #}
+  {% endfor %}
+</section>

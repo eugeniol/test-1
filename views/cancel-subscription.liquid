@@ -1,0 +1,67 @@
+{% set cancel_reasons = 'cancel_reasons' | t  %}
+
+<div class="og-cancel-subscription-button">
+
+  <a
+    class="og-link"
+    @click={{ 'show_closest_modal' | js }}
+  >
+    {{ 'cancel_subscription_button' | t }}
+  </a>
+
+  <dialog aria-hidden="true">
+    <form
+      action="{{ 'cancel_subscription' | action }}"
+      name="og_subscription_cancel"
+      @success={{ 'close_closest_modal' | js }}
+      @reset={{ 'close_closest_modal' | js }}
+    >
+      <input type="hidden" value="{{ subscription.public_id }}" name="subscription" />
+      <div class="og-dialog-header">
+        <h5 class="og-dialog-title">{{ 'modal_cancel_header' | t }}</h5>
+        <button class="og-button" type="reset" aria-label="{{ 'modal_close' | t }}">{{ 'modal_close' | t }}</button>
+      </div>{# /og-dialog-header #}
+
+      <div class="og-dialog-body radio-list">
+        {{ 'modal_cancel_body' | t }}
+
+        {% for reason in cancel_reasons | entries | shuffle %}
+          {% set code = reason | first %}
+          {% set text = reason | last %}
+
+          {% if code != '1' %}
+            <div class="og-input-group">
+              <input class="og-check-radio" required type="radio" name="cancel_reason" 
+                value="{{ code }} | {{ text }}" id="cancel_reason_{{ code }}_{{ subscription.public_id }}"/>
+              <label class="og-check-radio-label" for="cancel_reason_{{ code }}_{{ subscription.public_id }}">
+                {{ text }}
+              </label>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        {# Other cancel reason #}
+        {% set other_reason = cancel_reasons | get('1') %}
+        {% if other_reason %}
+          <div class="og-input-group">
+            <input class="og-check-radio" required type="radio" name="cancel_reason" value="1" id="cancel_reason_1_{{ subscription.public_id }}"/>
+            <label class="og-check-radio-label" for="cancel_reason_1_{{ subscription.public_id }}">{{ other_reason }}</label>
+          </div>
+          <textarea
+            onfocus='this.form.querySelector("input[value=\\"1\\"]").click()'
+            class="og-form-control" 
+            name="cancel_reason_details"
+          ></textarea>
+        {% endif %}
+
+        <input type="hidden" name="subscription" value="{{ subscription.public_id }}"/>
+      </div>{# /og-dialog-body #}
+
+      <div class="og-dialog-footer">
+        <button class="og-button" name="cancel_subscription" type="submit">
+          {{ 'modal_cancel_save' | t }}
+        </button>
+      </div>{# /og-dialog-footer #}
+    </form>
+  </dialog>
+</div>{# /og-cancel-subscription-button #}

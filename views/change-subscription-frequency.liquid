@@ -1,0 +1,26 @@
+<form
+  action="{{ 'change_subscription_frequency' | action }}"
+  @finally={{ 'enable_form_elements' | js }}
+  @submit={{ 'disable_form_elements' | js }}
+>
+  <input type="hidden" required name="subscription" value="{{subscription.public_id}}"/>
+  <select name="frequency" @change={{ 'submit_form_onchange' | js }} />
+    {% set subscription_frequency_still_exists = false %}
+    {% for frequency in 'frequencies' | setting %}
+      {% set frequency_text = 'frequency_period' | t(every = frequency.every, period = frequency.period) %}
+      {% if frequency.every == subscription.every and frequency.period == subscription.every_period %}
+        {% set subscription_frequency_still_exists = true %}
+        <option selected value="{{ frequency.every }}_{{ frequency.period }}">{{ frequency_text }}</option>
+      {% else %}
+        <option value="{{ frequency.every }}_{{ frequency.period }}">{{ frequency_text }}</option>
+      {% endif %}
+
+    {% endfor %}
+
+    {# If an order still uses an old subscription value, keep it as an option. #}
+    {% if not subscription_frequency_still_exists %}
+      <option selected value="{{ subscription.every }}_{{ subscription.every_period }}"></option>
+    {% endif %}
+  </select>
+
+</form>

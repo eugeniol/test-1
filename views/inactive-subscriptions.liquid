@@ -1,0 +1,42 @@
+{# Inactive subscriptions entry point #}
+<section id="og-inactive-subscriptions">
+  {% for subscription in subscriptions | reject('live') %}
+    {% if index === 0 %}
+      <h1 class="og-title">{{ 'subscriptions_inactive_header' | t }}</h1>
+    {% endif %}
+    <div class="og-inactive-subscription">
+      {% set product = products | find(id=subscription.product) %}
+      {% if product %}
+        <div class="og-product">
+          <div class="og-product-image-container">
+            <img
+              class="og-product-image"
+              loading="lazy"
+              alt="{{ product.name }}"
+              src="{{ product.image_url | if_defined }}"
+              width="200"
+              height="200"
+            />
+          </div>
+          <div class="og-name-price-controls-container">
+            <div class="og-description-and-controls">
+              <div class="og-product-description">
+                <h3 class="og-product-name">
+                  <a href="{{ product.detail_url | if_defined }}">{{ product.name }}</a>
+                </h3>
+                <div class="og-subscription-quantity">{{ 'product_read_only_quantity' | t }}</div>
+              </div>
+            </div>
+            <div class="og-inactive-subscription-actions">
+              {% include 'reactivate-subscription' %}
+              <div class="og-cancelled-text-date">
+                <span class="og-cancelled-text">{{ 'subscription_inactive_cancelled_on' | t }}</span>
+                <span class="og-cancelled-date">{{ subscription.cancelled | date }}</span>
+              </div>
+            </div>{# /og-inactive-subscription-actions #}
+          </div>{# og-name-price-controls-container #}
+        </div>{# /og-product #}
+      {% endif %}
+    </div>{# /og-inactive-subscription #}
+  {% endfor %}
+</section>{# /og-inactive-subscriptions #}

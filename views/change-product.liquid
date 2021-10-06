@@ -1,0 +1,61 @@
+{% set alternative_ids = get(sku_swap, 'products.' + product.external_product_id, []) %}
+
+{% if alternative_ids.length %}
+
+  <div class="og-change-product-control">
+
+    <a
+      class="og-link"
+      @click={{ 'show_closest_modal' | js }}
+    >
+      {{ 'change_product_control_label' | t }}
+    </a>
+
+    <dialog aria-hidden="true" aria-labelledby="exampleModalLabel" id="og-change-product-{{product.external_product_id}}">
+      <form
+        action="{{ 'change_product' | action }}" 
+        name="og_change_product"
+        @success={{ 'close_closest_modal' | js }}
+        @reset={{ 'close_closest_modal' | js }}>
+
+        <div class="og-dialog-header">
+          <h5 class="og-dialog-title">{{ 'modal_change_product_header' | t }}</h5>
+          <button class="og-button" type="reset" aria-label="{{ 'modal_close' | t }}">{{ 'modal_close' | t }}</button>
+        </div>{# /og-dialog-header #}
+
+        <div class="og-dialog-body og-radio-button-list">
+          {% for alternative_id in alternative_ids %}
+            {% set alternative = products | find(id=alternative_id) %}
+
+            <div class="og-input-group">
+              <input
+                required
+                type="radio"
+                name="product" 
+                value="{{alternative_id}}"
+                id="alternative-product-{{alternative_id}}-for-{{product.external_product_id}}-in-{{order_item.public_id}}"/>
+              <label
+                for="alternative-product-{{alternative_id}}-for-{{product.external_product_id}}-in-{{order_item.public_id}}">
+                <img src={{ alternative.image_url | if_defined }} />
+                  
+                {{ alternative.name }} — {{ alternative.price | currency }}
+
+              </label>
+            </div>
+
+          {% endfor %}
+        </div>{# /og-dialog-body #}
+
+        <div class="og-dialog-footer">
+          <input type="hidden" value="{{ subscription.public_id }}" name="subscription" />
+
+          <button class="og-button" name="change_product" type="submit">
+            {{ 'modal_change_product_save' | t }}
+          </button>
+        </div>{# /og-dialog-footer #}
+
+      </form>
+    </dialog>
+  </div>{# /og-sku-swap-control #}
+
+{% endif %}

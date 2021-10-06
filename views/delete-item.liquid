@@ -1,0 +1,40 @@
+<div class="og-delete-item-control">
+
+  <a
+    class="og-link"
+    @click={{ 'show_closest_modal' | js }}
+  >
+    {{ 'delete_item_control_label' | t }}
+  </a>
+
+  <dialog aria-hidden="true" aria-labelledby="exampleModalLabel" id="og-delete-{{ order_item.public_id }}">
+    <form
+      action="{{ 'delete_item' | action }}" 
+      name="og_delete_item"
+      @success={{ 'close_closest_modal' | js }}
+      @reset={{ 'close_closest_modal' | js }}>
+
+      <div class="og-dialog-header">
+        <h5 class="og-dialog-title">{{ 'modal_delete_item_header' | t }}</h5>
+        <button class="og-button" type="reset" aria-label="{{ 'modal_close' | t }}">{{ 'modal_close' | t }}</button>
+      </div>{# /og-dialog-header #}
+
+      <div class="og-dialog-body">
+        {% if subscription %}
+          {% set next_order_date = 'nth_order_date(order, subscription)' | js | date %}
+          {{ 'modal_delete_subscription_item_body' | t }}
+        {% else %}
+          {{ 'modal_delete_one_time_item_body' | t }}
+        {% endif %}
+      </div>{# /og-dialog-body #}
+
+      <div class="og-dialog-footer">
+        <input type="hidden" value="{{ order_item.public_id }}" name="item" />
+        <button class="og-button" name="delete_item" type="submit">
+          {{ 'modal_delete_item_save' | t }}
+        </button>
+      </div>{# /og-dialog-footer #}
+
+    </form>
+  </dialog>
+</div>{# /og-delete-item-control #}

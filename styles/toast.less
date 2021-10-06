@@ -1,0 +1,50 @@
+@notification-color: #fff;
+@notification-font-size: 17px;
+@notification-padding: 15px;
+@notification-border-radius: 2px;
+
+@notification-success-color: @success-color;
+@notification-error-color: @error-color;
+
+.og-toasts {
+  position: fixed;
+  right: 0;
+  top: 0;
+  max-width: 100%;
+}
+
+.og-toast {
+  min-width: 300px;
+  background-color: #333;
+  white-space: nowrap;
+  position: fixed;
+  z-index: 1;
+  right: 0;
+  list-style: none;
+  transition: right ease-in 0.4s;
+  transition-property: right height;
+  right: -100vw;
+  position: relative;
+  margin: 10px;
+  white-space: normal;
+  color: @notification-color;
+  font-size: @notification-font-size;
+  border-radius: @notification-border-radius;
+  padding: @notification-padding;
+
+  &.og-show {
+    right: 0;
+  }
+
+  &.og-hide {
+    display: none;
+  }
+
+  &.og-toast-success {
+    background: @notification-success-color;
+  }
+
+  &.og-toast-error {
+    background: @notification-error-color;
+  }
+}

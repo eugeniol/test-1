@@ -1,0 +1,143 @@
+{# Unsent orders entry point #}
+<section id="og-unsent-shipments" aria-labelledBy="shipments-unsent-header">
+  {# Iterate over all unsent orders #}
+  {% for order in orders | select(status = 'UNSENT') %}
+    {# If at least one sent order exists, display an unsent shipment header #}
+    {% if index == 0 %}
+      <h1 class="og-title" id="shipments-unsent-header">{{ 'shipments_unsent_header' | t }}</h1>
+    {% endif %}
+
+    {% set current_order_items = order_items | select(order=order.public_id) %}
+    {% set payment = payments | find(id=order.payment) %}
+    {% set shipping_address = addresses | find(id=order.shipping_address) %}
+
+    {# Unsent shipment #}
+    <div class="og-unsent-shipment">
+
+      {# Shipment header #}
+      <div class="og-shipment-header" data-shipment-id="{{ order.public_id }}">
+        <div class="og-shipment-info">
+          <span class="og-shipment-on og-desktop">{{ 'shipment_unsent_header' | t }}</span>
+          {{ order.place | date }}
+
+          <div class="og-mobile">
+            {% include 'change-date' %}
+          </div>
+        </div>
+
+        {# Shipment controls #}
+        <div class="og-shipment-header-controls og-desktop">
+          {% include 'change-date' %}
+          {% include 'send-now' %}
+          {% include 'skip' %}
+        </div>
+
+        <a class="og-mobile-menu-container og-mobile" flyout-menu-toggle="closed" href="javascript:;" >
+          <div class="og-mobile-menu" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="64" height="64" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="#626262"><path d="M9.5 13a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0z"/></g></svg>
+          </div>
+          <div class="og-mobile-menu-options" flyout-menu >
+            {% include 'skip' %}
+            {% include 'send-now' %}
+          </div>
+        </a>
+      </div>{# /og-shipment-header #}
+
+      {# Shipment body #}
+      <div class="og-shipment-body">
+        {# Iterate over all order items in the order #}
+        {% for order_item in current_order_items %}
+          {% set product = products | find(id=order_item.product) %}
+          {% set subscription = subscriptions | find(id=order_item.subscription) %}
+          {# Order item #}
+          <div class="og-product" og-item-id="{{ order_item.public_id }}" og-subscription-id="{{ order_item.subscription }}">
+            {% if product %}
+              <div class="og-product-image-container">
+                <img class="og-product-image" loading="lazy" alt="{{ product.name }}" src="{{ product.image_url | if_defined }}" width="200" height="200" />
+              </div>
+              <div class="og-name-price-controls-container">
+                <div class="og-description-and-controls">
+                  <div class="og-product-description">
+                    <h3 class="og-product-name">
+                      <a href="{{ product.detail_url | if_defined }}">{{ product.name }}</a>
+                    </h3>
+                    <h4 class="og-product-display-name">{{ product.display_name }}</h4>
+                    {% if subscription %}
+                      {# Change product control #}
+                      {% include 'change-product' %}
+                    {% endif %}
+                    <div class="og-mobile">{% include 'order-item-price' %}</div>
+                  </div>
+                  <div class="og-freq-quantity-controls">
+                  {% if subscription %}
+                      {# Quantity control #}
+                      {% include 'change-quantity'%}
+
+                      {# Frequency control #}
+                      <div class="og-freq">
+                        <span>{{ 'item_controls_every' | t }}</span>
+                        {% include 'change-subscription-frequency' %}
+                      </div>
+                  {% else %}
+                    <div class="og-freq-quantity-controls">
+                      {# Quantity control #}
+                      {% include 'change-quantity'%}
+                      {# One Time Frequency Display #}
+                      <div class="og-freq">
+                        <span>{{ 'one_time_notice' | t }}</span>
+                      </div>
+                    </div>
+                  {% endif %}
+                  </div>{# /og-freq-quantity-controls #}
+
+                  <div class="og-item-remove-actions">
+
+                    {# If the order item has a subscription, display subscription controls #}
+                    {% if subscription %}
+                      {# Cancel subscription control #}
+                      {% include 'cancel-subscription' %}
+
+                      {# Pause subscription control #}
+                      {% include 'pause-subscription' %}
+                    {% endif %}
+
+                    {# If the order item is one time or belongs to an order with more than one order item, display delete item control #}
+                    {% if current_order_items.length > 1 or not subscription %}
+                      {% include 'delete-item' %}
+                    {% endif %}
+
+                  </div>{# /og-item-remove-actions #}
+                </div>{# /og-description-and-controls #}
+                <div class="og-desktop">{% include 'order-item-price' %}</div>
+              </div>{# /og-name-price-controls-container #}
+            {% endif %}
+          </div>{# /og-product #}
+        {% endfor%}
+      </div>{# /og-shipment-body #}
+
+      {# Shipment footer #}
+      <div class="og-shipment-footer">
+        <details class="og-mobile og-mobile-payment-shipping">
+
+          <div class="og-payment-shipping">
+            {% include 'billing-shipping-details' %}
+          </div>
+          <div class="og-total-table-mobile">
+            {% include 'order-total' %}
+          </div>
+          <summary>
+            <div>
+              {{ 'billing_total_header' | t }} - {{ order.total | currency }}
+            </div>
+          </summary>
+        </details>{# /og-mobile-payment-shipping #}
+        <div class="og-payment-shipping og-desktop">
+
+          {% include 'billing-shipping-details' %}
+          {% include 'order-total' %}
+
+        </div>{# /og-payment-shipping #}
+      </div>{# /og-shipment-footer #}
+    </div>{# /og-unsent-shipment #}
+  {% endfor %}
+</section>

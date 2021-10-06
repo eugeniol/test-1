@@ -1,0 +1,75 @@
+/*================ Subscriptions/Order Styles ================*/
+
+/*================ Shipment Header Styles ================*/
+
+// i.e Topbar of Shipment/Order
+.og-shipment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+
+  .og-shipment-header-controls > div {
+    display: inline-block;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+// i.e Shipment On
+.og-shipment-info {
+  font-size: @shipment-info-font-size;
+  color: @shipment-info-color;
+  font-weight: @shipment-info-font-weight;
+}
+
+
+/*================ Payment and Shipping Styles ================*/
+
+.og-payment-shipping {
+  border-top: @border-width @border-style @border-color;
+  padding: 3rem 4rem;
+  display: flex;
+  justify-content: space-between;
+
+  // i.e Billing | Shipping | Order Total
+  .og-footer-header {
+    margin-bottom: 10px;
+    font-size: @shipment-footer-header-font-size;
+    font-weight: @shipment-footer-header-font-weight;
+    color: @shipment-footer-header-color;
+  }
+}
+
+/*================ Order Total Styles ================*/
+
+.og-total-table {
+
+  table {
+    border-collapse: collapse;
+    font-size: inherit;
+
+    td,
+    th {
+      line-height: 1.5;
+    }
+
+    td {
+      padding-left: 25px;
+      text-align: right;
+    }
+
+    th {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    tr:last-child > * {
+      border-top: 1px solid #999;
+      padding-top: 5px;
+      font-weight: bold;
+    }
+  }
+}

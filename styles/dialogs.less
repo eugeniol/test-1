@@ -1,0 +1,61 @@
+/*================ Dialog ================*/
+
+dialog::backdrop,
+dialog + .backdrop {
+  transition: all 0.2s ease;
+  background: @dialog-backdrop-color;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+/*================ Dialog Parts ================*/
+
+.og-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.og-dialog-header,
+.og-dialog-body,
+.og-dialog-footer {
+  padding: 1em;
+}
+
+.og-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.og-dialog-title {
+  padding-right: 1em;
+  margin: 0;
+  font-size: @dialog-form-title-font-size;
+  font-weight: @dialog-form-title-font-weight;
+}
+
+/*================ Flyout Menu ================*/
+[flyout-menu-toggle] {
+  [flyout-menu] {
+    visibility: hidden;
+  }
+
+  &[flyout-menu-toggle="opened"] {
+    [flyout-menu] {
+      visibility: visible;
+    }
+  }
+
+  dialog {
+    visibility: visible;
+  }
+
+  dialog + * {
+    visibility: visible;
+  }
+}
+

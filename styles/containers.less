@@ -1,0 +1,78 @@
+/*================ Sections Variables ================*/
+/*
+i.e: Unsent Shipments, Sent Shipments, Inactive Subscriptions, Main Message
+*/
+
+@section-border-color: #ddd;
+@container-width: 1120px;
+
+/*================ All Sections ================*/
+
+.og-sent-shipment,
+.og-unsent-shipment,
+.og-inactive-subscription,
+.og-message-main {
+  border: 1px solid @section-border-color;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+}
+
+.og-container section {
+  margin: 1.5rem 0 4rem;
+}
+
+/*================ Main Container ================*/
+
+.og-container {
+  max-width: @container-width;
+  margin: 0 auto;
+}
+
+/*================ Main Message ================*/
+
+.og-message-main {
+  padding: 1.5rem 4rem;
+  text-align: center;
+}
+
+/*================ Sent Shipments ================*/
+
+#og-sent-shipments {
+  .og-freq-quantity-controls {
+    padding-top: 20px;
+
+    .og-freq > span,
+    .og-quantity > span {
+      margin: 0 5px;
+      font-weight: bold;
+    }
+
+    & > div {
+      margin-top: 20px;
+    }
+  }
+
+  .og-edit-payment,
+  .og-change-shipment-address-button {
+    display: none;
+  }
+}
+
+/*================ Unsent Shipments ================*/
+
+#og-unsent-shipments {
+  .og-product-description {
+    margin-top: 0;
+  }
+}
+
+/*================ Inactive Subscriptions ================*/
+
+#og-inactive-subscriptions {
+  border-top: 1px solid @section-border-color;
+  padding-top: 1.5em;
+}
+

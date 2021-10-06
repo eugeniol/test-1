@@ -1,0 +1,106 @@
+/*================ Product Order Item Styles ================*/
+
+.og-product {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: @product-padding;
+
+  &:not(:last-child) {
+    border-bottom: @border-width @border-style @border-color;
+  }
+
+  .og-product-image-container {
+    width: @product-image-width;
+    height: @product-image-height;
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+  }
+
+  .og-price {
+    margin-top: 20px;
+  }
+
+  .og-name-price-controls-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-grow: 2;
+
+    .og-product-description {
+      margin: 20px 0 40px;
+
+      h3,
+      h4,
+      og-sku-swap
+      {
+        display: inline-block;
+      }
+
+      og-sku-swap {
+        margin-left: 50px;
+      }
+    }
+
+    .og-description-and-control {
+      align-content: space-between;
+    }
+  }
+
+  .og-item-remove-actions {
+    & > * {
+      display: inline-block;
+
+      &:not(:last-child) {
+        margin-right: 50px;
+      }
+    }
+
+    a {
+      font-size: @order-item-remove-link-font-size;
+      color: @order-item-remove-link-font-color;
+    }
+  }
+
+  .og-base-unit-price {
+    font-size: @product-base-price-font-size;
+    color: @product-base-price-color;
+    text-decoration: @product-base-price-text-decoration;
+  }
+}
+
+/*================ Line Item Styles ================*/
+.og-upsell {
+  padding: @product-padding;
+  border-top: none;
+  border-bottom: @border-width @border-style @border-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*================ SKU Swap Styles ================*/
+
+// i.e SKU Swap
+.og-change-product-control {
+  display: inline;
+  margin-left: 30px;
+
+  a {
+    font-size: @product-change-text-font-size;
+    font-weight: @product-change-text-font-weight;
+    color: @product-change-text-color;
+    text-decoration: @product-change-text-text-decoration;
+  }
+}
+
+

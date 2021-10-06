@@ -1,0 +1,82 @@
+body.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.og-mobile {
+  display: none;
+}
+
+og-smi {
+  font-size: @font-size;
+  font-family: @font-family;
+  color: @font-color;
+
+  @import './containers.less';
+  @import './loadscreen.less';
+  @import './buttons.less';
+  @import './links.less';
+  @import './forms.less';
+  @import './dialogs.less';
+  @import './order-items.less';
+  @import './subscriptions.less';
+
+  .og-title {
+    font-size: @title-font-size;
+  }
+
+  #og-no-shipment-message {
+    margin-top: 40px;
+  }
+
+  .og-inactive-subscription-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .og-reactivate-subscription-button {
+    margin-bottom: 1em;
+  }
+
+  .og-change-shipment-date-button input[type='date'] {
+    width: 100%;
+  }
+
+  .og-billing-details-container,
+  .og-shipping-address-container {
+    min-height: 68px;
+  }
+
+  .og-subscription-quantity {
+    margin-top: 20px;
+  }
+
+  .og-cancelled-text-date {
+    display: none;
+  }
+
+  @og-gutter-x: 1.5rem;
+  @og-gutter-y: 0;
+
+  .og-col {
+    flex: 1 0 0%;
+  }
+
+  .og-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(@og-gutter-y * -1);
+    margin-right: calc(@og-gutter-x / -2);
+    margin-left: calc(@og-gutter-x / -2);
+
+    & > * {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 100%;
+      padding-right: calc(@og-gutter-x / 2);
+      padding-left: calc(@og-gutter-x / 2);
+      margin-top: @og-gutter-y;
+    }
+  }
+
+}

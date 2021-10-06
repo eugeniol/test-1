@@ -1,0 +1,100 @@
+/*================ Overriding Global Variables ================*/
+@font-size: 16px;
+@font-family: Helvetica, sans-serif;
+@font-color: #113243;
+
+@button-border: 1px solid #000;
+@button-border-radius: 3px;
+@button-font-size: 16px;
+
+/*================ Theme Specific Variables Variables ================*/
+@og-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+@og-margin: 25px;
+@og-light-gray: #f5f6f9;
+@og-border: 0.5px solid #c1c1c1;
+
+og-smi {
+  font-size: @font-size;
+  font-family: @font-family;
+  color: @font-color;
+
+  .og-container {
+    #og-smi-main-title {
+      text-align: center;
+      background: @og-light-gray;
+      padding: @og-margin;
+      font-weight: bold;
+      margin: 0 0 @og-margin;
+      font-size: 20px;
+    }
+
+    .og-title {
+      margin: @og-margin 0;
+    }
+
+    section {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    .og-link {
+      text-decoration: underline;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: #666;
+      }
+    }
+
+    .og-button {
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .og-shipment-header {
+      border-bottom: @og-border;
+
+      .og-button {
+        min-width: 120px;
+
+        &.og-button-close {
+          min-width: 0;
+        }
+      }
+    }
+
+    .og-shipment-info,
+    .og-title {
+      font-size: 20px;
+    }
+
+    .og-product-name {
+      font-size: 18px;
+
+      & > a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
+    .og-unsent-shipment,
+    .og-inactive-subscription,
+    .og-sent-shipment {
+      border: @og-border;
+      border-radius: 2px;
+      box-shadow: @og-box-shadow;
+    }
+
+    .og-payment-is-expired, .og-payment-is-expiring, .og-payment-will-be-expired {
+      color: @error-color;
+      font-weight: 600;
+    }
+  }
+}

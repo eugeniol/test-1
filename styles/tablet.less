@@ -1,0 +1,130 @@
+
+@media screen and (max-width: 1120px) {
+  og-smi {
+    .og-container {
+      width: 960px;
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  og-smi {
+    .og-container {
+      width: 767px;
+
+      .og-sent-shipment .og-freq {
+        margin-left: 0;
+      }
+
+      .og-button {
+        font-size: 14px;
+      }
+
+      .og-shipment-info,
+      .og-title {
+        font-size: 18px;
+      }
+
+      .og-shipment-header .og-button {
+        min-width: 105px;
+      }
+
+      .og-total-table table {
+        width: 100%;
+      }
+    }
+
+    .og-product  {
+      .og-product-image-container {
+        width: 150px;
+      }
+
+      .og-price {
+        margin-top: 28px;
+      }
+
+      .og-name-price-controls-container {
+        .og-item-remove-actions {
+          .og-cancel-subscription-button {
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+
+    .og-freq-quantity-controls > div {
+      display: block;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 480px) {
+  og-smi {
+    .og-container {
+      width: 480px;
+
+      .og-shipment-header,
+      .og-payment-shipping {
+        padding: 1.5rem;
+      }
+
+      .og-product {
+        padding: 1.5rem;
+
+        .og-name-price-controls-container {
+          flex-direction: column;
+
+          .og-item-remove-actions  {
+
+            & > a {
+              display: block;
+            }
+
+            .og-cancel-subscription-button {
+              margin: 0 0 20px;
+            }
+
+            .og-pause-subscription-button {
+              display: block;
+            }
+
+          }
+        }
+
+      }
+
+      .og-payment-shipping {
+        flex-direction: column;
+
+        & > div {
+          padding: 0 60px;
+          margin: 0 0 60px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .og-shipment-header-controls {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        & > div,
+        & > div:not(:last-child) {
+          margin: 0 0 10px;
+
+          .og-button {
+            min-width: 100%;
+          }
+
+          dialog .og-button {
+            min-width: 0;
+          }
+        }
+      }
+    }
+  }
+}
